@@ -3,6 +3,8 @@ name: Tests e2e
 on:
   pull_request:
     branches: [main]
+  push:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -12,6 +14,9 @@ jobs:
 
     strategy:
       fail-fast: true
+
+    env:
+      TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -23,6 +28,21 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Start proxy server
+        run: pnpm dev:proxy &
+        env:
+          PORT: '3333'
+
+      - name: Wait for proxy to be ready
+        run: |
+          for i in $(seq 1 30); do
+            curl -s http://localhost:3333 > /dev/null && echo "Proxy ready!" && exit 0
+            echo "Waiting for proxy... ($i/30)"
+            sleep 1
+          done
+          echo "Proxy failed to start"
+          exit 1
 
       - name: Cache Playwright browsers
         id: cache-playwright
