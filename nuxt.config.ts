@@ -121,7 +121,7 @@ export default defineNuxtConfig({
       },
     ],
     lazy: true,
-    langDir: 'internationalization',
+    langDir: 'i18n/locales',
     defaultLocale: 'en',
   },
 
