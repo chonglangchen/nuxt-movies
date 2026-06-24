@@ -5,13 +5,13 @@
     "prepare": "nitropack prepare",
     "build": "nitropack build"
   },
+  "dependencies": {
+    "https-proxy-agent": "^9.1.0",
+    "undici": "^8.5.0"
+  },
   "devDependencies": {
     "nitropack": "^2.9.6",
     "ofetch": "^1.3.4",
     "typescript": "^5.4.5"
-  },
-  "dependencies": {
-    "https-proxy-agent": "^9.1.0",
-    "undici": "^8.5.0"
   }
 }
