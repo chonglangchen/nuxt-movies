@@ -15,10 +15,6 @@ export default defineNuxtConfig({
     renderJsonPayloads: true,
   },
 
-  routeRules: {
-    '/**': isDev ? {} : { cache: { swr: true, maxAge: 120, staleMaxAge: 60, headersOnly: true } },
-  },
-
   runtimeConfig: {
     public: {
       apiBaseUrl,
@@ -43,7 +39,9 @@ export default defineNuxtConfig({
 
   nitro: {
     routeRules: {
-      '/**': { isr: false },
+      '/**': isDev
+        ? { isr: false }
+        : { cache: { swr: true, maxAge: 120, staleMaxAge: 60, headersOnly: true }, isr: false },
     },
   },
 
